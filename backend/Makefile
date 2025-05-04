@@ -11,7 +11,7 @@ DATABASE_URL ?= ./data/app.db
 .PHONY: build
 build:
 	@echo "Building Go application..."
-	go build -o app main.go
+	CGO_ENABLED=1 go build -o app main.go
 	@echo "Build complete."
 
 .PHONY: test

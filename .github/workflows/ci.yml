@@ -48,7 +48,8 @@ jobs:
     - name: Build and Run Backend (for Playwright E2E)
       run: |
         cd backend
-        go build -o app main.go & # Build and run backend in background
+        make build
+        PORT=8080 make run & # Run backend in background
         echo "Waiting for backend to start..."
         # Wait for the health check endpoint to be available
         timeout 60s bash -c 'until curl --output /dev/null --silent --head http://localhost:8080/healthz; do printf '\'' . '\''; sleep 1; done; echo ""'
