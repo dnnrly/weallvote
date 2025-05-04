@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.navbar {
+  @apply flex items-center justify-between p-6 shadow-md;
+}
+
+.navbar-logo {
+  @apply text-xl font-bold flex items-center gap-2;
+}
+
+.navbar-links {
+  @apply flex items-center gap-6;
+}
+
+.navbar-button {
+  @apply text-blue-600 font-semibold hover:underline;
+}
+
+.hero {
+  @apply flex flex-col md:flex-row items-center justify-between px-8 md:px-16 py-16 max-w-7xl mx-auto;
+}
+
+.hero-title {
+  @apply text-4xl md:text-5xl font-bold leading-tight;
+}
+
+.hero-text {
+  @apply text-lg text-gray-600;
+}
+
+.hero-button {
+  @apply bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition;
+}
+
+.poll-card {
+  @apply w-full max-w-md p-6 bg-gray-50 rounded-xl shadow-md;
+}
+
+.poll-title {
+  @apply text-xl font-semibold mb-4;
+}
+
+.poll-option {
+  @apply mb-4;
+}
+
+.poll-bar-bg {
+  @apply w-full bg-gray-200 h-2 rounded;
+}
+
+.poll-bar-fill {
+  @apply bg-blue-500 h-2 rounded;
+}
