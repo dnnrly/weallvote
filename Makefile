@@ -5,7 +5,7 @@ FRONTEND_DIR = frontend
 BACKEND_DIR = backend
 DOCKER_IMAGE_NAME = weallvote3
 DOCKER_TAG = latest
-DATABASE_URL ?= ./data/app.db
+DATABASE_URL ?= $(shell pwd)/app.db
 
 # Default target
 .PHONY: all
@@ -46,8 +46,8 @@ test-e2e:
 # Note: The backend Makefile doesn't have a test target based on the provided context
 # If it's added later, this should call that target instead
 .PHONY: test-backend
-test-backend:
-	cd $(BACKEND_DIR) && go test ./...
+test-backend: go test ./...
+	cd $(BACKEND_DIR) && make test
 
 # Development servers
 .PHONY: dev
@@ -81,7 +81,7 @@ docker-build: build
 
 .PHONY: docker-run
 docker-run:
-	docker run -p 3000:3000 -p 8080:8080 $(DOCKER_IMAGE_NAME):$(DOCKER_TAG)
+	docker run -p 3000:3000 -p 8080:8080 -v $(DATABASE_URL):$(DATABASE_URL) -e DATABASE_URL=$(DATABASE_URL) $(DOCKER_IMAGE_NAME):$(DOCKER_TAG)
 
 # Lint and format
 .PHONY: lint

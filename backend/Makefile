@@ -14,6 +14,12 @@ build:
 	go build -o app main.go
 	@echo "Build complete."
 
+.PHONY: test
+test:
+	@echo "Running Go tests..."
+	go test ./...
+	@echo "Tests complete."
+
 # Run the Go application
 .PHONY: run
 run: build
