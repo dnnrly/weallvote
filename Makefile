@@ -43,6 +43,25 @@ test-frontend:
 test-e2e:
 	cd $(FRONTEND_DIR) && npm run test:e2e
 
+.PHONY: test-e2e-docker
+test-e2e-docker:
+	# Build and start the Docker container in detached mode
+	docker run -d --name weallvote3-test -p 8080:8080 -v $(DATABASE_URL):$(DATABASE_URL) -e DATABASE_URL=$(DATABASE_URL) $(DOCKER_IMAGE_NAME):$(DOCKER_TAG)
+	
+	# Wait for the application to start
+	sleep 10
+	
+	# Run the Playwright tests against the Docker container
+	# Store the exit code to return it later
+	cd $(FRONTEND_DIR) && PLAYWRIGHT_BASE_URL=http://localhost:8080 npm run test:e2e; TEST_EXIT_CODE=$$?; \
+	
+	# Cleanup: stop and remove the Docker container regardless of test result
+	docker stop weallvote3-test || true; \
+	docker rm weallvote3-test || true; \
+	
+	# Return the original test exit code
+	exit $$TEST_EXIT_CODE
+
 # Note: The backend Makefile doesn't have a test target based on the provided context
 # If it's added later, this should call that target instead
 .PHONY: test-backend
@@ -81,7 +100,7 @@ docker-build: build
 
 .PHONY: docker-run
 docker-run:
-	docker run -p 3000:3000 -p 8080:8080 -v $(DATABASE_URL):$(DATABASE_URL) -e DATABASE_URL=$(DATABASE_URL) $(DOCKER_IMAGE_NAME):$(DOCKER_TAG)
+	docker run -p 8080:8080 -v $(DATABASE_URL):$(DATABASE_URL) -e DATABASE_URL=$(DATABASE_URL) $(DOCKER_IMAGE_NAME):$(DOCKER_TAG)
 
 # Lint and format
 .PHONY: lint
