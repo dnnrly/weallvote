@@ -12,6 +12,7 @@
       <button
         v-else
         @click="isModalOpen = true"
+        data-testid="nav-login-button"
         class="text-white bg-blue-600 px-4 py-2 rounded hover:bg-blue-700"
       >
         Login
@@ -42,6 +43,7 @@
   
           <button
             @click="isRegister ? register() : login()"
+            data-testid="modal-submit-button"
             class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
           >
             {{ isRegister ? 'Create Account' : 'Login' }}
@@ -65,6 +67,7 @@
   
           <button
             @click="isModalOpen = false"
+            data-testid="modal-close-button"
             class="absolute top-2 right-2 text-gray-500 hover:text-black"
           >
             ✕
