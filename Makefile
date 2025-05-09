@@ -65,7 +65,7 @@ test-e2e-docker:
 # Note: The backend Makefile doesn't have a test target based on the provided context
 # If it's added later, this should call that target instead
 .PHONY: test-backend
-test-backend: go test ./...
+test-backend:
 	cd $(BACKEND_DIR) && make test
 
 # Development servers
