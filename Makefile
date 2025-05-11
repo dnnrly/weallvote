@@ -46,8 +46,8 @@ test-e2e:
 .PHONY: test-e2e-docker
 test-e2e-docker:
 	# Build and start the Docker container in detached mode
-	docker run -d --name weallvote3-test -p 8080:8080 -v $(DATABASE_URL):$(DATABASE_URL) -e DATABASE_URL=$(DATABASE_URL) $(DOCKER_IMAGE_NAME):$(DOCKER_TAG)
-	
+	docker compose up --wait	
+
 	# Wait for the application to start
 	sleep 10
 	
@@ -56,8 +56,7 @@ test-e2e-docker:
 	cd $(FRONTEND_DIR) && PLAYWRIGHT_BASE_URL=http://localhost:8080 npm run test:e2e; TEST_EXIT_CODE=$$?; \
 	
 	# Cleanup: stop and remove the Docker container regardless of test result
-	docker stop weallvote3-test || true; \
-	docker rm weallvote3-test || true; \
+	docker compose down || true;
 	
 	# Return the original test exit code
 	exit $$TEST_EXIT_CODE
