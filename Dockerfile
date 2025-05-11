@@ -43,5 +43,5 @@ ENV FRONTEND_DIST=/app/frontend/dist
 # Expose the port the backend listens on
 EXPOSE 8080
 
-ENTRYPOINT ["sh", "-c", "export && find . && goose -dir migrations sqlite3 $DATABASE_URL up && ./app"]
+ENTRYPOINT ["sh", "-c", "goose -dir migrations sqlite3 $DATABASE_URL up && ./app"]
 
