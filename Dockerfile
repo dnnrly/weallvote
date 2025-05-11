@@ -32,13 +32,16 @@ RUN apk --no-cache add ca-certificates sqlite
 WORKDIR /app
 
 COPY --from=backend-builder /app/backend/app ./
-COPY --from=backend-builder /app/frontend/dist /frontend/dist
+COPY --from=backend-builder /app/frontend/dist ./frontend/dist
 COPY backend/migrations ./migrations
 COPY backend/.env ./
 
 COPY --from=backend-builder /go/bin/goose /usr/local/bin/goose
 
+ENV FRONTEND_DIST=/app/frontend/dist
+
 # Expose the port the backend listens on
 EXPOSE 8080
 
-ENTRYPOINT ["sh", "-c", "goose -dir migrations sqlite3 $DATABASE_URL up && ./app"]
+ENTRYPOINT ["sh", "-c", "export && find . && goose -dir migrations sqlite3 $DATABASE_URL up && ./app"]
+

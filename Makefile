@@ -100,7 +100,7 @@ docker-build: build
 
 .PHONY: docker-run
 docker-run:
-	docker run -p 8080:8080 -v $(DATABASE_URL):$(DATABASE_URL) -e DATABASE_URL=$(DATABASE_URL) $(DOCKER_IMAGE_NAME):$(DOCKER_TAG)
+	docker compose up --abort-on-container-exit --build --remove-orphans --renew-anon-volumes --exit-code-from app --build
 
 # Lint and format
 .PHONY: lint

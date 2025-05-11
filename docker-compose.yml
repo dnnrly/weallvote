@@ -1,0 +1,27 @@
+services:
+  firebase-emulator:
+    image: spine3/firebase-emulator:latest
+    ports:
+      - "4000:4000"  # UI
+      - "9099:9099"  # Auth
+    environment:
+      - FIREBASE_AUTH_EMULATOR_HOST=0.0.0.0:9099
+      - GCP_PROJECT_ID=weallvote-3a8a3
+      - ENABLE_UI=true
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - firebase-emulator
+    volumes:
+      - ./app.db:/app.db
+    ports:
+      - "8080:8080"  # App
+    environment:
+      - FIREBASE_AUTH_EMULATOR_HOST=firebase-emulator:9099
+      - FIRESTORE_EMULATOR_HOST=firebase-emulator:8080
+      - FUNCTIONS_EMULATOR_HOST=firebase-emulator:5001
+      - STORAGE_EMULATOR_HOST=firebase-emulator:9199
+      - DATABASE_URL=/app/app.db
