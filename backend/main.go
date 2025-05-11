@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/dnnrly/weallvote/backend/handlers"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/joho/godotenv"
@@ -56,6 +57,7 @@ func main() {
 	// }
 	// log.Println("Migrations completed.")
 
+	handlers.InitFirebase() // Initialize Firebase app
 
 	// Create a new router
 	r := chi.NewRouter()
@@ -63,6 +65,8 @@ func main() {
 	// Add middleware
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
+
+	r.Post("/auth/login", handlers.LoginHandler) // Login route
 
 	// Define routes
 	r.Get("/healthz", app.healthzHandler)

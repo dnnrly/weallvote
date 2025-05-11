@@ -107,7 +107,31 @@
     error.value = '';
     try {
       await signInWithEmailAndPassword(auth, email.value, password.value);
-      isModalOpen.value = false;
+
+        const user = auth.currentUser;
+        if (!user) {
+        throw new Error('Login failed: No user returned.');
+        }
+
+        // 2. Get ID token
+        const token = await user.getIdToken();
+
+        // 3. POST to backend /auth/login
+        const res = await fetch('http://localhost:8080/auth/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({}),
+        });
+
+        if (!res.ok) {
+        const msg = await res.text();
+        throw new Error(`Backend rejected login: ${msg}`);
+        }
+
+        isModalOpen.value = false;
     } catch (err: any) {
       error.value = err.message;
     }
