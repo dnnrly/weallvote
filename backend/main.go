@@ -73,7 +73,7 @@ func main() {
 
 	// Serve static files from the 'dist' directory (frontend build output)
 	// This assumes your frontend build outputs to a 'dist' folder relative to the backend binary
-	fs := http.FileServer(http.Dir("../frontend/dist"))
+	fs := http.FileServer(http.Dir(os.Getenv("FRONTEND_DIST")))
 	r.Handle("/*", fs) // Serve frontend files for all other routes
 
 	// Start the server
