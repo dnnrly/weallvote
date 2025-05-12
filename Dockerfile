@@ -35,6 +35,7 @@ COPY --from=backend-builder /app/backend/app ./
 COPY --from=backend-builder /app/frontend/dist ./frontend/dist
 COPY backend/migrations ./migrations
 COPY backend/.env ./
+COPY backend/admin-sdk-config.json ./
 
 COPY --from=backend-builder /go/bin/goose /usr/local/bin/goose
 
