@@ -60,3 +60,5 @@ playwright-report/
 
 # Live testing files
 *.db
+
+admin-sdk-config.json
