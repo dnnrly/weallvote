@@ -5,12 +5,14 @@ import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+const isLocalhost = window.location.hostname === "localhost";
+
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyB3Kn6m7OToz8SuMmJzvZEhEzjYyzwTGu0",
   authDomain: "weallvote-3a8a3.firebaseapp.com",
-  projectId: "weallvote-3a8a3",
+  projectId: isLocalhost ? "demo-weallvote" : "weallvote-3a8a3",
   storageBucket: "weallvote-3a8a3.firebasestorage.app",
   messagingSenderId: "524528414252",
   appId: "1:524528414252:web:cd4037a266b0ce9539ab89",
@@ -22,7 +24,7 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
 export const auth = getAuth(app);
-if (window.location.hostname === "localhost") {
+if (isLocalhost) {
   connectAuthEmulator(auth, "http://127.0.0.1:9099");
   console.log("Using Firebase Auth Emulator");
 }

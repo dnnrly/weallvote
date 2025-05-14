@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "test:unit": "vitest run",
     "test:e2e": "playwright test --reporter=list",
+    "test:e2e:setup": "node e2e/setup.js",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
