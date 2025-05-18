@@ -1,0 +1,188 @@
+@startuml
+title Combined Firebase Authentication Flows
+
+' Define participants
+participant User
+participant Frontend as App
+participant "Firebase Auth" as FA
+participant Backend
+database Database as DB
+participant "Social Provider (e.g., Google)" as SP
+
+' Optional: Set a global layout direction if desired
+' left to right direction
+
+== Email/Password Registration ==
+
+User -> App +: User fills registration form
+return Submits email, password
+App -> FA +: createUserWithEmailAndPassword(email, password)
+return Success/Failure Response (User object)
+
+
+alt Registration Success
+  App -> App : User created in Firebase, emailVerified: false
+  note over App: Optionally show "Verify Email" prompt
+  App -> FA +: sendEmailVerification()
+    FA -> FA: Generate verification link
+    FA --> User: Send verification email with link
+  return Success/Failure Response
+
+  ' Integrate with your backend/database after successful Auth registration
+  App -> Backend: POST /api/users (Firebase User UID, email, etc.)
+  activate Backend
+  note left of Backend: Verify Firebase ID Token (optional but good practice)
+  Backend -> DB: Create new user profile/record
+  activate DB
+  DB --> Backend: Confirmation
+  deactivate DB
+  Backend --> App: User profile created response
+  deactivate Backend
+
+else Registration Failure (e.g., email exists, weak password)
+  App -> App: Display error message to user
+end
+
+== Email/Password Login ==
+
+App -> User: User fills login form
+User -> App: Submits email, password
+App -> FA: signInWithEmailAndPassword(email, password)
+activate FA
+FA --> App: Success/Failure Response (User object, ID Token)
+deactivate FA
+
+alt Login Success
+  App -> App: User logged in (session managed by Firebase SDK)
+  note over App: Check user.emailVerified status
+  App -> Backend: GET /api/profile (Include Firebase ID Token in Authorization header)
+  activate Backend
+  Backend -> FA: Verify ID Token (using Firebase Admin SDK)
+  activate FA
+  FA --> Backend: User UID from token
+  deactivate FA
+  Backend -> DB: Fetch user profile data using UID
+  activate DB
+  DB --> Backend: User profile data
+  deactivate DB
+  Backend --> App: User profile data
+  deactivate Backend
+  App -> App: Display application content based on profile & verification status
+
+else Login Failure (e.g., incorrect credentials)
+  App -> App: Display error message to user
+end
+
+== Logout ==
+
+App -> User: Clicks Logout button
+App -> FA: signOut()
+activate FA
+FA -> App: Clear authentication state (tokens, session)
+FA --> App: Success Response
+deactivate FA
+
+App -> App: Clear local user data/state
+App -> App: Redirect to public page (e.g., login or homepage)
+
+== Password Reset Request ==
+
+App -> User: User clicks "Forgot Password"
+User -> App: Enters email address
+App -> FA: sendPasswordResetEmail(email)
+activate FA
+FA -> FA: Check if email exists in Firebase Auth
+FA -> User: Send password reset email with link (if email exists)
+FA --> App: Success/Failure Response
+deactivate FA
+
+App -> User: Instructs user to check email
+
+== Password Reset Confirmation ==
+
+User -> App: Clicks password reset link in email (Navigates to your app with oobCode)
+App -> App: Extract oobCode from URL
+App -> FA: verifyPasswordResetCode(oobCode) ' Optional: Check code validity and get email
+activate FA
+FA --> App: User email / Error
+deactivate FA
+
+alt Code is valid
+  App -> App: Display form to set new password
+  User -> App: Enters and submits new password
+  App -> FA: confirmPasswordReset(oobCode, newPassword)
+  activate FA
+  FA -> FA: Verify oobCode again, update user password
+  FA -> FA: Invalidate oobCode
+  FA --> App: Success/Failure Response
+  deactivate FA
+  App -> App: Inform user password reset is complete
+  App -> App: Suggest logging in with new password
+
+else Code is invalid or expired
+  App -> App: Display error message (e.g., "Invalid or expired reset link")
+end
+
+== Email Verification Confirmation ==
+
+User -> App: Clicks email verification link (Navigates to your app with oobCode and mode=verifyEmail)
+App -> App: Extract oobCode from URL
+App -> FA: applyActionCode(oobCode)
+activate FA
+FA -> FA: Verify oobCode, mark user's email as verified
+FA -> FA: Invalidate oobCode
+FA --> App: Success/Failure Response
+deactivate FA
+
+alt Verification Success
+  App -> FA: user.reload() ' Get updated user state
+  activate FA
+  FA --> App: Updated User object (emailVerified: true)
+  deactivate FA
+  App -> App: Update UI / Grant full access
+  App -> App: Inform user email is verified
+  App -> App: Redirect to relevant page
+else Verification Failure (e.g., invalid or expired code)
+  App -> App: Display error message
+  App -> App: Maybe provide option to resend verification email
+end
+
+== Social Login (High-Level via Popup/Redirect) ==
+
+App -> User: Clicks "Sign in with Social Provider" button
+App -> FA: signInWithPopup() or signInWithRedirect()
+activate FA
+FA -> SP: Initiate OAuth flow (Redirect/Popup)
+activate SP
+User -> SP: Authenticates with Social Provider
+SP --> FA: Authorization code/token
+deactivate SP
+FA -> SP: Exchange code/token for user info (Server-to-server)
+activate SP
+deactivate SP
+FA -> FA: Create or link Firebase user account
+FA -> FA: Issue Firebase ID Token
+FA --> App: Success/Failure Response (User object, ID Token)
+deactivate FA
+
+alt Login Success
+  App -> App: User logged in with social account
+  App -> Backend: GET /api/profile (Include Firebase ID Token in Authorization header)
+  activate Backend
+  Backend -> FA: Verify ID Token (using Firebase Admin SDK)
+  activate FA
+  FA --> Backend: User UID from token
+  deactivate FA
+  Backend -> DB: Fetch or create user profile data using UID
+  activate DB
+  DB --> Backend: User profile data
+  deactivate DB
+  Backend --> App: User profile data
+  deactivate Backend
+  App -> App: Display application content
+
+else Login Failure (e.g., user cancels)
+  App -> App: Display error message or return to previous state
+end
+
+@enduml

@@ -1,0 +1,57 @@
+@startuml
+left to right direction
+
+actor User
+
+rectangle "Web Application (Auth System)" {
+  User -- (Register with Email/Password)
+  User -- (Login with Email/Password)
+  User -- (Logout)
+  User -- (Request Password Reset)
+  User -- (Verify Email)
+  User -- (Register/Login with Social Account)
+
+  (Register with Email/Password) .> (Receive Registration Feedback) : include
+  (Register with Email/Password) .> (Trigger Email Verification) : include
+
+  (Login with Email/Password) .> (Receive Login Feedback) : include
+  (Login with Email/Password) .> (Check Email Verification Status) : include
+
+  (Request Password Reset) .> (Receive Password Reset Instructions) : include
+
+  (Verify Email) .> (Confirm Account Ownership) : include
+  (Verify Email) .> (Request New Verification Link) : extends
+
+  ' Optional Account Management Use Cases
+  User -- (Change Email Address)
+  User -- (Delete Account)
+}
+
+' Notes based on user story details
+note right of (Register with Email/Password)
+  Clearly indicate if email exists
+  or password is weak.
+end note
+
+note right of (Login with Email/Password)
+  Receive clear feedback on
+  incorrect credentials.
+end note
+
+note right of (Verify Email)
+  Prompted after registration.
+  Clear email instructions.
+end note
+
+note right of (Check Email Verification Status)
+  Remind/Restrict unverified users
+  until email is confirmed.
+end note
+
+note top of User
+  Represents any user interacting
+  with authentication features.
+end note
+
+
+@enduml
