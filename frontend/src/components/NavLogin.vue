@@ -6,7 +6,7 @@
       </span>
 
       <span
-        id="email-verified"
+        data-testid="email-unverified"
         v-if="!user.emailVerified"
         class="text-xs text-yellow-600 border border-yellow-500 px-2 py-0.5 rounded"
         title="This email is not verified"
@@ -14,7 +14,7 @@
         Unverified
       </span>
 
-      <button @click="logout" class="text-sm text-red-600 hover:underline">
+      <button @click="logout" data-testid="logout-button" class="text-sm text-red-600 hover:underline">
         Logout
       </button>
     </div>
@@ -35,8 +35,8 @@
           {{ isRegister ? 'Register' : 'Login' }}
         </h2>
 
-        <input v-model="email" type="email" placeholder="Email" class="w-full mb-3 p-2 border rounded" />
-        <input v-model="password" type="password" placeholder="Password" class="w-full mb-3 p-2 border rounded" />
+        <input v-model="email" type="email" placeholder="Email" data-testid="modal-email-input" class="w-full mb-3 p-2 border rounded" />
+        <input v-model="password" type="password" placeholder="Password" data-testid="modal-password-input" class="w-full mb-3 p-2 border rounded" />
 
         <button @click="isRegister ? register() : login()" data-testid="modal-submit-button"
           class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">

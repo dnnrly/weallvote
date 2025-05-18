@@ -46,7 +46,7 @@ test-e2e:
 .PHONY: test-e2e-docker
 test-e2e-docker:
 	# Build and start the Docker container in detached mode
-	docker compose up --wait	
+	COMPOSE_BAKE=true docker compose up --wait --build --remove-orphans --renew-anon-volumes -d	
 
 	# Run the setup script to wait for services to be ready
 	cd $(FRONTEND_DIR) && npm run test:e2e:setup

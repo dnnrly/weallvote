@@ -17,6 +17,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - NODE_ENV=development
     depends_on:
       - firebase
     volumes:
@@ -27,3 +29,4 @@ services:
       - FIREBASE_AUTH_EMULATOR_HOST=firebase:9099
       - DATABASE_URL=/app/app.db
       - GCLOUD_PROJECT=demo-weallvote
+      - NODE_ENV=development

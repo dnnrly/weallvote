@@ -1,0 +1,662 @@
+{
+  "config": {
+    "configFile": "/home/dnnrly/projects/weallvote3/frontend/playwright.config.ts",
+    "rootDir": "/home/dnnrly/projects/weallvote3/frontend/e2e",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results.json"
+        }
+      ],
+      [
+        "html",
+        {
+          "open": "never"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/dnnrly/projects/weallvote3/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/dnnrly/projects/weallvote3/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/home/dnnrly/projects/weallvote3/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/home/dnnrly/projects/weallvote3/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/home/dnnrly/projects/weallvote3/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/home/dnnrly/projects/weallvote3/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.52.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev",
+      "port": 5173,
+      "reuseExistingServer": true
+    }
+  },
+  "suites": [
+    {
+      "title": "auth.spec.ts",
+      "file": "auth.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "can sign up a new user",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1677,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "Browser Console [log] NODE_ENV:  production\n"
+                    },
+                    {
+                      "text": "Browser Console [log] Firebase config:  {apiKey: AIzaSyABCDEFGHIJKLMNOPQRSTUVWXYZabcdefg1234567890, authDomain: demo-weallvote.firebaseapp.com, projectId: demo-weallvote, storageBucket: demo-weallvote.appspot.com, messagingSenderId: 123456789012}\n"
+                    },
+                    {
+                      "text": "Browser Console [info] WARNING: You are using the Auth Emulator, which is intended for local testing only.  Do not use with production credentials.\n"
+                    },
+                    {
+                      "text": "Browser Console [log] Using Firebase Auth Emulator\n"
+                    },
+                    {
+                      "text": "Browser Console [verbose] [DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-05-18T09:03:42.426Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d748ac400d08b85935ef-2b46e137546d3d99f64c",
+          "file": "auth.spec.ts",
+          "line": 19,
+          "column": 1
+        },
+        {
+          "title": "can log in an existing verified user",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 654,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "Browser Console [log] NODE_ENV:  production\n"
+                    },
+                    {
+                      "text": "Browser Console [log] Firebase config:  {apiKey: AIzaSyABCDEFGHIJKLMNOPQRSTUVWXYZabcdefg1234567890, authDomain: demo-weallvote.firebaseapp.com, projectId: demo-weallvote, storageBucket: demo-weallvote.appspot.com, messagingSenderId: 123456789012}\n"
+                    },
+                    {
+                      "text": "Browser Console [info] WARNING: You are using the Auth Emulator, which is intended for local testing only.  Do not use with production credentials.\n"
+                    },
+                    {
+                      "text": "Browser Console [log] Using Firebase Auth Emulator\n"
+                    },
+                    {
+                      "text": "Browser Console [verbose] [DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-05-18T09:03:44.714Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d748ac400d08b85935ef-1db03b2825f1ea7eb3f0",
+          "file": "auth.spec.ts",
+          "line": 34,
+          "column": 1
+        },
+        {
+          "title": "can log in an existing unverified user",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 648,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "Browser Console [log] NODE_ENV:  production\n"
+                    },
+                    {
+                      "text": "Browser Console [log] Firebase config:  {apiKey: AIzaSyABCDEFGHIJKLMNOPQRSTUVWXYZabcdefg1234567890, authDomain: demo-weallvote.firebaseapp.com, projectId: demo-weallvote, storageBucket: demo-weallvote.appspot.com, messagingSenderId: 123456789012}\n"
+                    },
+                    {
+                      "text": "Browser Console [info] WARNING: You are using the Auth Emulator, which is intended for local testing only.  Do not use with production credentials.\n"
+                    },
+                    {
+                      "text": "Browser Console [log] Using Firebase Auth Emulator\n"
+                    },
+                    {
+                      "text": "Browser Console [verbose] [DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-05-18T09:03:45.375Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d748ac400d08b85935ef-2ffda4ed78b3dabb819d",
+          "file": "auth.spec.ts",
+          "line": 55,
+          "column": 1
+        },
+        {
+          "title": "can sign up a new user",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3032,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "Browser Console [log] NODE_ENV:  production\n"
+                    },
+                    {
+                      "text": "Browser Console [log] Firebase config:  JSHandle@object\n"
+                    },
+                    {
+                      "text": "Browser Console [info] WARNING: You are using the Auth Emulator, which is intended for local testing only.  Do not use with production credentials.\n"
+                    },
+                    {
+                      "text": "Browser Console [log] Using Firebase Auth Emulator\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-05-18T09:03:47.906Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d748ac400d08b85935ef-c725bc35128ec3d86710",
+          "file": "auth.spec.ts",
+          "line": 19,
+          "column": 1
+        },
+        {
+          "title": "can log in an existing verified user",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1200,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "Browser Console [log] NODE_ENV:  production\n"
+                    },
+                    {
+                      "text": "Browser Console [log] Firebase config:  JSHandle@object\n"
+                    },
+                    {
+                      "text": "Browser Console [info] WARNING: You are using the Auth Emulator, which is intended for local testing only.  Do not use with production credentials.\n"
+                    },
+                    {
+                      "text": "Browser Console [log] Using Firebase Auth Emulator\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-05-18T09:03:52.382Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d748ac400d08b85935ef-595939495b23467eb98a",
+          "file": "auth.spec.ts",
+          "line": 34,
+          "column": 1
+        },
+        {
+          "title": "can log in an existing unverified user",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1120,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "Browser Console [log] NODE_ENV:  production\n"
+                    },
+                    {
+                      "text": "Browser Console [log] Firebase config:  JSHandle@object\n"
+                    },
+                    {
+                      "text": "Browser Console [info] WARNING: You are using the Auth Emulator, which is intended for local testing only.  Do not use with production credentials.\n"
+                    },
+                    {
+                      "text": "Browser Console [log] Using Firebase Auth Emulator\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-05-18T09:03:53.590Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d748ac400d08b85935ef-3c0ba9b4d89b66698a02",
+          "file": "auth.spec.ts",
+          "line": 55,
+          "column": 1
+        },
+        {
+          "title": "can sign up a new user",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3394,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "Browser Console [log] NODE_ENV:  production\n"
+                    },
+                    {
+                      "text": "Browser Console [log] Firebase config:  {apiKey: AIzaSyABCDEFGHIJKLMNOPQRSTUVWXYZabcdefg1234567890, authDomain: demo-weallvote.firebaseapp.com, projectId: demo-weallvote, storageBucket: demo-weallvote.appspot.com, messagingSenderId: 123456789012}\n"
+                    },
+                    {
+                      "text": "Browser Console [info] WARNING: You are using the Auth Emulator, which is intended for local testing only.  Do not use with production credentials.\n"
+                    },
+                    {
+                      "text": "Browser Console [log] Using Firebase Auth Emulator\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-05-18T09:03:57.804Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d748ac400d08b85935ef-dc030fd6820eea0a1448",
+          "file": "auth.spec.ts",
+          "line": 19,
+          "column": 1
+        },
+        {
+          "title": "can log in an existing verified user",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2856,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "Browser Console [log] NODE_ENV:  production\n"
+                    },
+                    {
+                      "text": "Browser Console [log] Firebase config:  {apiKey: AIzaSyABCDEFGHIJKLMNOPQRSTUVWXYZabcdefg1234567890, authDomain: demo-weallvote.firebaseapp.com, projectId: demo-weallvote, storageBucket: demo-weallvote.appspot.com, messagingSenderId: 123456789012}\n"
+                    },
+                    {
+                      "text": "Browser Console [info] WARNING: You are using the Auth Emulator, which is intended for local testing only.  Do not use with production credentials.\n"
+                    },
+                    {
+                      "text": "Browser Console [log] Using Firebase Auth Emulator\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-05-18T09:04:01.594Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d748ac400d08b85935ef-660a5776a82e83979368",
+          "file": "auth.spec.ts",
+          "line": 34,
+          "column": 1
+        },
+        {
+          "title": "can log in an existing unverified user",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2798,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "Browser Console [log] NODE_ENV:  production\n"
+                    },
+                    {
+                      "text": "Browser Console [log] Firebase config:  {apiKey: AIzaSyABCDEFGHIJKLMNOPQRSTUVWXYZabcdefg1234567890, authDomain: demo-weallvote.firebaseapp.com, projectId: demo-weallvote, storageBucket: demo-weallvote.appspot.com, messagingSenderId: 123456789012}\n"
+                    },
+                    {
+                      "text": "Browser Console [info] WARNING: You are using the Auth Emulator, which is intended for local testing only.  Do not use with production credentials.\n"
+                    },
+                    {
+                      "text": "Browser Console [log] Using Firebase Auth Emulator\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-05-18T09:04:04.457Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d748ac400d08b85935ef-75dd95d20ae1ea6aee24",
+          "file": "auth.spec.ts",
+          "line": 55,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "frontpage.spec.ts",
+      "file": "frontpage.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "visits the app root url",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 397,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-05-18T09:03:46.049Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a9a73dd63af21b0df0b7-f077d30d145cd673d990",
+          "file": "frontpage.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "visits the app root url",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 727,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-05-18T09:03:54.738Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a9a73dd63af21b0df0b7-05f81d32e4f96e560aec",
+          "file": "frontpage.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "visits the app root url",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1565,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-05-18T09:04:07.282Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a9a73dd63af21b0df0b7-d705cd5d4fbcbe8017b1",
+          "file": "frontpage.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-05-18T09:03:39.157Z",
+    "duration": 29824.348,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -13,6 +13,7 @@ dist
 dist-ssr
 coverage
 *.local
+docs/
 
 # Exclude test files and folders, including playwright and Cypress and Go
 test
@@ -59,6 +60,7 @@ test-results/
 playwright-report/
 
 # Live testing files
+backend/app
 *.db
 
 admin-sdk-config.json

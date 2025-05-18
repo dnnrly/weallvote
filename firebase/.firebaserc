@@ -1,4 +1,10 @@
 {
+  "apiKey": "AIzaSyABCDEFGHIJKLMNOPQRSTUVWXYZabcdefg1234567890",
+  "authDomain": "demo-weallvote.firebaseapp.com",
+  "projectId": "demo-weallvote",
+  "storageBucket": "demo-weallvote.appspot.com",
+  "messagingSenderId": "123456789012",
+  "appId": "1:123456789012:web:abcdef1234567890abcdef",
   "projects": {
     "default": "demo-weallvote"
   }
