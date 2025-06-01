@@ -7,6 +7,11 @@ all: run
 # Environment variable for database URL
 DATABASE_URL ?= ./data/app.db
 
+.PHONY: tools
+tools: ## install tools necessary to build and test this application
+	go install github.com/mfridman/tparse@v0.13.2
+	go install go.uber.org/mock/mockgen@v0.5.2
+
 # Build the Go application
 .PHONY: build
 build:
@@ -17,8 +22,21 @@ build:
 .PHONY: test
 test:
 	@echo "Running Go tests..."
-	go test ./...
+	go test -run COMPILE_ONLY
+	go test -race -cover -count=1 -json ./... | tparse -all
 	@echo "Tests complete."
+
+.PHONY: ci-test
+ci-test: ## ci target - run tests to generate coverage data
+	rm -rf ./tmp/coverage/ci-test.txt
+	mkdir -p ./tmp/coverage
+	go test -tags fuzz -coverprofile=./tmp/coverage/ci-test.txt -covermode=set ./...
+
+.PHONY: mocks
+mocks:
+	@echo "Generating mocks..."
+	mockgen -package controllers -source ./controllers/dependencies.go -destination ./controllers/dependencies_test.go
+	@echo "Mocks generated."
 
 # Run the Go application
 .PHONY: run
