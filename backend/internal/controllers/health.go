@@ -3,11 +3,13 @@ package controllers
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/dnnrly/weallvote/backend/internal/dependencies"
 )
 
 type HealthController struct {
-	DB     DB
-	Logger Logger
+	DB     dependencies.DB
+	Logger dependencies.Logger
 }
 
 func (c *HealthController) HealthzHandler(w http.ResponseWriter, r *http.Request) {

@@ -35,7 +35,7 @@ ci-test: ## ci target - run tests to generate coverage data
 .PHONY: mocks
 mocks:
 	@echo "Generating mocks..."
-	mockgen -package controllers -source ./controllers/dependencies.go -destination ./controllers/dependencies_test.go
+	mockgen -package testmocks -source ./internal/dependencies/dependencies.go -destination ./internal/testmocks/dependencies_test.go
 	@echo "Mocks generated."
 
 # Run the Go application

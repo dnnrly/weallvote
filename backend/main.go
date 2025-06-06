@@ -9,7 +9,8 @@ import (
 
 	firebase "firebase.google.com/go/v4"
 	"github.com/dnnrly/gobail"
-	"github.com/dnnrly/weallvote/backend/controllers"
+	"github.com/dnnrly/weallvote/backend/internal/controllers"
+	"github.com/dnnrly/weallvote/backend/internal/repos"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/joho/godotenv"
@@ -44,10 +45,14 @@ func main() {
 	firebaseApp := InitFirebase()
 	authClient := gobail.Return(firebaseApp.Auth(context.Background())).OrExitMsg("Cannot initialize Firebase Auth")
 
+	userRepo := &repos.UserRepository{
+		DB: db,
+	}
 	// Initialize application context
 	app := &application{
 		authController: &controllers.AuthController{
-			Auth: authClient,
+			Auth:     authClient,
+			UserRepo: userRepo,
 		},
 		healthController: &controllers.HealthController{
 			DB: db,

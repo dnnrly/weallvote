@@ -6,6 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/dnnrly/weallvote/backend/internal/testmocks"
 	"github.com/stretchr/testify/assert"
 	gomock "go.uber.org/mock/gomock"
 )
@@ -14,8 +15,8 @@ func TestHealthzHandler(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockDB := NewMockDB(ctrl)
-	mockLogger := NewMockLogger(ctrl)
+	mockDB := testmocks.NewMockDB(ctrl)
+	mockLogger := testmocks.NewMockLogger(ctrl)
 	healthController := &HealthController{
 		DB:     mockDB,
 		Logger: mockLogger,
@@ -40,8 +41,8 @@ func TestHealthzHandlerDBError(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockDB := NewMockDB(ctrl)
-	mockLogger := NewMockLogger(ctrl)
+	mockDB := testmocks.NewMockDB(ctrl)
+	mockLogger := testmocks.NewMockLogger(ctrl)
 	healthController := &HealthController{
 		DB:     mockDB,
 		Logger: mockLogger,
