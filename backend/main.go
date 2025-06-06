@@ -1,29 +1,32 @@
 package main
 
 import (
+	"context"
 	"database/sql"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
 
+	firebase "firebase.google.com/go/v4"
+	"github.com/dnnrly/gobail"
+	"github.com/dnnrly/weallvote/backend/internal/controllers"
+	"github.com/dnnrly/weallvote/backend/internal/repos"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/joho/godotenv"
 	_ "github.com/mattn/go-sqlite3" // Import for SQLite driver
+	"google.golang.org/api/option"
 )
 
 // Define a struct for the application context (optional but good practice)
 type application struct {
-	db *sql.DB
+	authController   *controllers.AuthController
+	healthController *controllers.HealthController
 }
 
 func main() {
 	// Load environment variables from .env file
-	err := godotenv.Load()
-	if err != nil {
-		log.Println("Warning: Error loading .env file, using environment defaults")
-	}
+	gobail.Run(godotenv.Load()).OrExitMsg("Failed to load .env file")
 
 	// Get database URL from environment variables
 	dbURL := os.Getenv("DATABASE_URL")
@@ -32,30 +35,29 @@ func main() {
 	}
 
 	// Open database connection
-	db, err := sql.Open("sqlite3", dbURL)
-	if err != nil {
-		log.Fatalf("Failed to open database: %v", err)
-	}
+	db := gobail.Return(sql.Open("sqlite3", dbURL)).OrExitMsg("Failed to open database")
 	defer db.Close()
 
 	// Ping database to verify connection
-	err = db.Ping()
-	if err != nil {
-		log.Fatalf("Failed to connect to database: %v", err)
-	}
+	gobail.Run(db.Ping()).OrExitMsg("Failed to connect to database")
 	log.Println("Database connection established.")
 
+	firebaseApp := InitFirebase()
+	authClient := gobail.Return(firebaseApp.Auth(context.Background())).OrExitMsg("Cannot initialize Firebase Auth")
+
+	userRepo := &repos.UserRepository{
+		DB: db,
+	}
 	// Initialize application context
-	app := &application{db: db}
-
-	// Run migrations (optional, can be done via Makefile or Docker entrypoint)
-	// For simplicity in main, we'll skip running here and rely on Makefile/Docker
-	// log.Println("Running database migrations...")
-	// if err := goose.Up(db, "./migrations"); err != nil {
-	// 	log.Fatalf("Failed to run migrations: %v", err)
-	// }
-	// log.Println("Migrations completed.")
-
+	app := &application{
+		authController: &controllers.AuthController{
+			Auth:     authClient,
+			UserRepo: userRepo,
+		},
+		healthController: &controllers.HealthController{
+			DB: db,
+		},
+	}
 
 	// Create a new router
 	r := chi.NewRouter()
@@ -64,12 +66,13 @@ func main() {
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 
-	// Define routes
-	r.Get("/healthz", app.healthzHandler)
+	r.Post("/auth/login", app.authController.LoginHandler)
+
+	r.Get("/healthz", app.healthController.HealthzHandler)
 
 	// Serve static files from the 'dist' directory (frontend build output)
 	// This assumes your frontend build outputs to a 'dist' folder relative to the backend binary
-	fs := http.FileServer(http.Dir("../frontend/dist"))
+	fs := http.FileServer(http.Dir(os.Getenv("FRONTEND_DIST")))
 	r.Handle("/*", fs) // Serve frontend files for all other routes
 
 	// Start the server
@@ -78,43 +81,12 @@ func main() {
 		port = "8080" // Default port
 	}
 	log.Printf("Starting server on :%s", port)
-	err = http.ListenAndServe(":"+port, r)
-	if err != nil {
-		log.Fatal(err)
-	}
+	gobail.Run(http.ListenAndServe(":"+port, r)).OrExitMsg("Failed to start server")
 }
 
-// healthzHandler is a simple handler for the health check endpoint.
-func (app *application) healthzHandler(w http.ResponseWriter, r *http.Request) {
-	// Check database connection as part of health check
-	err := app.db.Ping()
-	if err != nil {
-		http.Error(w, "Database connection failed", http.StatusInternalServerError)
-		log.Printf("Health check failed: Database connection error: %v", err)
-		return
-	}
+func InitFirebase() *firebase.App {
+	opt := option.WithCredentialsFile("admin-sdk-config.json") // 🔁 Replace with actual path
+	app := gobail.Return(firebase.NewApp(context.Background(), nil, opt)).OrExitMsg("Failed to init Firebase")
 
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintln(w, "OK")
-	log.Println("Health check successful.")
+	return app
 }
-
-// Placeholder for handlers and models (3-tier structure)
-// You would typically have separate files for these.
-
-// Example placeholder handler function
-// func (app *application) createUserHandler(w http.ResponseWriter, r *http.Request) {
-// 	// ... handler logic ...
-// }
-
-// Example placeholder model struct
-// type User struct {
-// 	ID int
-// 	Name string
-// }
-
-// Example placeholder model function
-// func (app *application) insertUser(name string) error {
-// 	// ... model logic ...
-// 	return nil
-// }

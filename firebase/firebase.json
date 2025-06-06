@@ -1,0 +1,35 @@
+{
+  "apiKey": "AIzaSyABCDEFGHIJKLMNOPQRSTUVWXYZabcdefg1234567890",
+  "authDomain": "demo-weallvote.firebaseapp.com",
+  "projectId": "demo-weallvote",
+  "storageBucket": "demo-weallvote.appspot.com",
+  "messagingSenderId": "123456789012",
+  "appId": "1:123456789012:web:abcdef1234567890abcdef",
+  "emulators": {
+    "singleProjectMode": true,
+    "database": {
+      "port": "5000",
+      "host": "0.0.0.0"
+    },
+    "ui": {
+      "port": "4000",
+      "host": "0.0.0.0"
+    },
+    "firestore": {
+      "port": "8080",
+      "host": "0.0.0.0"
+    },
+    "auth": {
+      "port": "9099",
+      "host": "0.0.0.0"
+    },
+    "hosting": {
+      "port": "50033",
+      "host": "0.0.0.0"
+    },
+    "storage": {
+      "port": "9199",
+      "host": "0.0.0.0"
+    }
+  }
+}

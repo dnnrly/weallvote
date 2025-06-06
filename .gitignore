@@ -32,5 +32,11 @@ coverage
 test-results/
 playwright-report/
 
+# Secrets
+admin-sdk-config.json
+
 # Live testing files
 *.db
+
+# Built assets
+app

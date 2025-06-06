@@ -43,10 +43,28 @@ test-frontend:
 test-e2e:
 	cd $(FRONTEND_DIR) && npm run test:e2e
 
+.PHONY: test-e2e-docker
+test-e2e-docker:
+	# Build and start the Docker container in detached mode
+	COMPOSE_BAKE=true docker compose up --wait --build --remove-orphans --renew-anon-volumes -d	
+
+	# Run the setup script to wait for services to be ready
+	cd $(FRONTEND_DIR) && npm run test:e2e:setup
+	
+	# Run the Playwright tests against the Docker container
+	# Store the exit code to return it later
+	cd $(FRONTEND_DIR) && PLAYWRIGHT_BASE_URL=http://localhost:8080 npm run test:e2e; TEST_EXIT_CODE=$$?; \
+	
+	# Cleanup: stop and remove the Docker container regardless of test result
+	docker compose down || true;
+	
+	# Return the original test exit code
+	exit $$TEST_EXIT_CODE
+
 # Note: The backend Makefile doesn't have a test target based on the provided context
 # If it's added later, this should call that target instead
 .PHONY: test-backend
-test-backend: go test ./...
+test-backend:
 	cd $(BACKEND_DIR) && make test
 
 # Development servers
@@ -81,7 +99,7 @@ docker-build: build
 
 .PHONY: docker-run
 docker-run:
-	docker run -p 3000:3000 -p 8080:8080 -v $(DATABASE_URL):$(DATABASE_URL) -e DATABASE_URL=$(DATABASE_URL) $(DOCKER_IMAGE_NAME):$(DOCKER_TAG)
+	docker compose up --abort-on-container-exit --build --remove-orphans --renew-anon-volumes --exit-code-from app --build
 
 # Lint and format
 .PHONY: lint

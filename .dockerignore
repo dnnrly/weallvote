@@ -13,6 +13,33 @@ dist
 dist-ssr
 coverage
 *.local
+docs/
+
+# Exclude test files and folders, including playwright and Cypress and Go
+test
+tests
+test/
+tests/
+__tests__
+__tests__/
+*.test.*
+*.spec.*
+*.e2e.*
+*.cy.*
+*.spec.ts
+*.test.ts
+*.e2e.ts
+*.cy.ts
+*.test.js
+*.spec.js
+*.e2e.js
+*.cy.js
+*.test.jsx
+*.spec.jsx
+*.e2e.jsx
+*.cy.jsx
+*.test.tsx
+*.spec.tsx
 
 /cypress/videos/
 /cypress/screenshots/
@@ -33,4 +60,7 @@ test-results/
 playwright-report/
 
 # Live testing files
+backend/app
 *.db
+
+admin-sdk-config.json

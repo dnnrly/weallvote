@@ -48,7 +48,8 @@ jobs:
     - name: Build and Run Backend (for Playwright E2E)
       run: |
         cd backend
-        go build -o app main.go & # Build and run backend in background
+        make build
+        PORT=8080 make run & # Run backend in background
         echo "Waiting for backend to start..."
         # Wait for the health check endpoint to be available
         timeout 60s bash -c 'until curl --output /dev/null --silent --head http://localhost:8080/healthz; do printf '\'' . '\''; sleep 1; done; echo ""'
@@ -62,14 +63,14 @@ jobs:
 
     - name: Run Frontend Unit Tests (if any)
       # Replace with your actual frontend test command if you have unit tests
-      run: cd frontend && npm test:unit
+      run: cd frontend && npm run test:unit
 
     - name: Install Playwright Browsers
       run: cd frontend && npx playwright install --with-deps
 
     - name: Run Playwright E2E Tests
       # Set the base URL for Playwright tests to the locally running backend
-      run: cd frontend && BASE_URL=http://localhost:8080 npx playwright test
+      run: cd frontend && PLAYWRIGHT_BASE_URL=http://localhost:8080 npm run test:e2e
 
   deploy:
     name: Deploy to Fly.io
